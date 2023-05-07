@@ -281,7 +281,13 @@ func (d *Decoder) unmarshal(val reflect.Value, finfo *fieldInfo, src *Node) erro
 	} else {
 		// otherwise set simple value directly
 		if err := setValue(val, src.Value); err != nil {
-			return fmt.Errorf("xmp: unmarshal %s: %v", finfo.String(), err)
+			var info string
+			if finfo == nil {
+				info = "nil"
+			} else {
+				info = finfo.String()
+			}
+			return fmt.Errorf("xmp: unmarshal %s: %v", info, err)
 		}
 	}
 
